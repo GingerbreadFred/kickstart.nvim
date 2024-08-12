@@ -3,3 +3,6 @@
 --
 -- See the kickstart.nvim README for more information
 return {}
+-- TODO: toggle header / source
+-- TODO: create definition from declaration
+-- TODO: figure out parsing test results from GTest in NeoTest (Does it not do this already?)
