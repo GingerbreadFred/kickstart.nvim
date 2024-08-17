@@ -1,6 +1,6 @@
 return {
   {
-    'nvim-tresitter/nvim-treesitter-textobjects',
+    'nvim-treesitter/nvim-treesitter-textobjects',
     opts = {},
     dependencies = { { 'nvim-treesitter/nvim-treesitter', opts = {} } },
     config = function()
