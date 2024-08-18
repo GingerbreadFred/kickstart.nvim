@@ -1,6 +1,7 @@
 return {
   {
     'nvim-neotest/neotest',
+    dev = { true },
     dependencies = {
       'nvim-neotest/nvim-nio',
       'nvim-lua/plenary.nvim',
@@ -63,24 +64,26 @@ return {
       }
     end,
     config = function()
-      -- Optional, but recommended, if you have enabled neotest's diagnostic option
-
+      ---@diagnostic disable-next-line: missing-fields
       require('neotest').setup {
-        discovery = {
-          filter_dir = function(name, rel_path, root)
-            return name ~= 'thirdparty' and name ~= 'build'
-          end,
-        },
         adapters = {
-          -- Load with default config
-          require('neotest-ctest').setup {},
+          require('neotest-ctest').setup {
+            root = function(dir)
+              return require('neotest.lib').files.match_root_pattern('CMakePresets.json', '.git')(dir)
+            end,
+            is_test_file = function(file_path)
+              local elems = vim.split(file_path, require('neotest.lib').files.sep, { plain = true })
+              local name, extension = unpack(vim.split(elems[#elems], '.', { plain = true }))
+              local supported_extensions = { 'cpp', 'cc', 'cxx' }
+              return vim.tbl_contains(supported_extensions, extension) and vim.endswith(name, 'Test') or false
+            end,
+            frameworks = { 'gtest' },
+          },
         },
         quickfix = {
           enabled = true,
           open = true,
         },
-        status = { virtual_text = true },
-        output = { open_on_run = true },
         diagnostic = {
           enabled = true,
           severity = 1,
