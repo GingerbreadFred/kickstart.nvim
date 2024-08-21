@@ -198,6 +198,10 @@ vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 
+-- Reset the scroll position after large jumps
+vim.keymap.set('n', '<C-d>', '<C-d>zz')
+vim.keymap.set('n', '<C-u>', '<C-u>zz')
+
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
