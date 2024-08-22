@@ -509,7 +509,13 @@ require('lazy').setup({
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('<leader>sds', function()
+            require('telescope.builtin').lsp_document_symbols { symbol_width = 50 }
+          end, '[S]earch [D]ocument [S]ymbols')
+
+          map('<leader>sdf', function()
+            require('telescope.builtin').lsp_document_symbols { symbol_width = 50, symbols = { 'method', 'function', 'constructor', 'destructor' } }
+          end, '[S]earch [D]ocument [F]unctions')
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.
