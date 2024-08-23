@@ -80,6 +80,10 @@ vim.opt.shiftwidth = 4
 vim.o.exrc = true
 vim.o.secure = true
 
+-- bells
+vim.o.errorbells = true
+vim.o.belloff = ''
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -99,10 +103,10 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
-vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
-vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"')
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"')
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"')
+vim.keymap.set('n', '<left>', '<cmd>echoerr "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echoerr "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echoerr "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echoerr "Use j to move!!"<CR>')
 
 -- Tab keymaps
 vim.keymap.set('v', '>', '>gv')
@@ -221,7 +225,12 @@ require('lazy').setup({
       }
     end,
   },
-
+  {
+    'tpope/vim-fugitive',
+    config = function()
+      vim.keymap.set('n', '<leader>gd', '<CMD>Gdiffsplit<CR>')
+    end,
+  },
   -- NOTE: Plugins can specify dependencies.
   --
   -- The dependencies are proper plugin specifications as well - anything
@@ -331,6 +340,27 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config', hidden = true }
       end, { desc = '[S]earch [N]eovim files' })
+      vim.keymap.set('n', '<leader>sgs', function()
+        local action_state = require 'telescope.actions.state'
+
+        local open_diff = function()
+          local selected_entry = action_state.get_selected_entry()
+          local value = selected_entry['path']
+          print(vim.inspect(selected_entry))
+          -- close Telescope window properly prior to switching windows
+          vim.api.nvim_win_close(0, true)
+          vim.cmd('edit ' .. value)
+          vim.cmd 'Gdiffsplit'
+        end
+
+        builtin.git_status {
+          attach_mappings = function(_, map)
+            map('i', '<S-CR>', open_diff)
+            return true
+          end,
+        }
+      end, { desc = '[S]earch [G]it [S]tatus' })
+      vim.keymap.set('n', '<leader>sgc', builtin.git_commits, { desc = '[S]earch [G]it [C]ommits' })
     end,
   },
 
