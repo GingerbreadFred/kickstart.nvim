@@ -216,7 +216,9 @@ require('lazy').setup({
       -- Document existing key chains
       require('which-key').add {
         { '<leader>c', group = '[C]ode' },
-        { '<leader>d', group = '[D]ocument' },
+        { '<leader>d', group = '[D]ebug' },
+        { '<leader>dw', group = '[D]ebug [W]indow' },
+        { '<leader>g', group = '[G]it' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
@@ -228,7 +230,7 @@ require('lazy').setup({
   {
     'tpope/vim-fugitive',
     config = function()
-      vim.keymap.set('n', '<leader>gd', '<CMD>Gdiffsplit<CR>')
+      vim.keymap.set('n', '<leader>gd', '<CMD>Gdiffsplit<CR>', { desc = '[G]it [D]iff' })
     end,
   },
   -- NOTE: Plugins can specify dependencies.
@@ -340,7 +342,8 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config', hidden = true }
       end, { desc = '[S]earch [N]eovim files' })
-      vim.keymap.set('n', '<leader>sgs', function()
+
+      vim.keymap.set('n', '<leader>gs', function()
         local action_state = require 'telescope.actions.state'
 
         local open_diff = function()
@@ -359,8 +362,8 @@ require('lazy').setup({
             return true
           end,
         }
-      end, { desc = '[S]earch [G]it [S]tatus' })
-      vim.keymap.set('n', '<leader>sgc', builtin.git_commits, { desc = '[S]earch [G]it [C]ommits' })
+      end, { desc = '[G]it [S]tatus' })
+      vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = '[G]it [C]ommits' })
     end,
   },
 
@@ -708,7 +711,7 @@ require('lazy').setup({
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<S-CR>'] = cmp.mapping.confirm { select = true },
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
