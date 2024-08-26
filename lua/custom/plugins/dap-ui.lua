@@ -47,10 +47,9 @@ return {
 
     dap.adapters.lldb = {
       type = 'executable',
-      command = '/opt/homebrew/opt/llvm/bin/lldb-dap', -- My path to the file
+      command = 'lldb-dap',
       name = 'lldb',
     }
-
     dap.configurations.cpp = {
       {
         name = 'Launch',
@@ -65,6 +64,7 @@ return {
         runInTerminal = false,
       },
     }
+
     vim.keymap.set('n', '<leader>db', require('dap').toggle_breakpoint, { desc = '[D]ebug [B]reakpoint' })
     vim.keymap.set('n', '<leader>dc', require('dap').continue, { desc = '[D]ebug [C]ontinue' })
     vim.keymap.set('n', '<leader>di', require('dap').step_into, { desc = '[D]ebug Step [I]nto' })
