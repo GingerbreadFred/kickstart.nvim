@@ -1,14 +1,17 @@
 return {
   {
+    'GingerbreadFred/neotest-ctest',
+    -- branch = 'SearchDepthFix',
+  },
+  {
     'nvim-neotest/neotest',
-    dev = { true },
     dependencies = {
       'nvim-neotest/nvim-nio',
       'nvim-lua/plenary.nvim',
       'antoinemadec/FixCursorHold.nvim',
       'nvim-treesitter/nvim-treesitter',
       -- Other neotest dependencies here
-      'orjangj/neotest-ctest',
+      'GingerbreadFred/neotest-ctest',
     },
     keys = function()
       local neotest = require 'neotest'
