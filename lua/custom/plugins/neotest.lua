@@ -1,7 +1,7 @@
 return {
   {
     'GingerbreadFred/neotest-ctest',
-    -- branch = 'SearchDepthFix',
+    branch = 'SearchDepthFix',
   },
   {
     'nvim-neotest/neotest',
