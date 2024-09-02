@@ -76,6 +76,7 @@ return {
       vim.keymap.set('n', '<leader>di', require('dap').step_into, { desc = '[D]ebug Step [I]nto' })
       vim.keymap.set('n', '<leader>do', require('dap').step_over, { desc = '[D]ebug Step [O]ver' })
       vim.keymap.set('n', '<leader>dO', require('dap').step_out, { desc = '[D]ebug Step [O]ut' })
+      vim.keymap.set('n', '<leader>ds', require('dap').terminate, { desc = '[D]ebug [S]top' })
 
       local float_params = { width = 200, height = 30, enter = true }
 
