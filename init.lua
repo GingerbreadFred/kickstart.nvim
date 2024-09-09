@@ -292,6 +292,7 @@ require('lazy').setup({
         --
         defaults = {
           layout_strategy = 'vertical',
+          initial_mode = 'normal',
         },
         -- pickers = {}
         extensions = {
